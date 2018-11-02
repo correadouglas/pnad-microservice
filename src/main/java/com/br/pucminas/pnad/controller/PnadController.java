@@ -17,7 +17,7 @@ public class PnadController {
 	
 	@Autowired
 	private PnadDao pnadDao;
-
+	
 	@GetMapping
 	public List<Pnad> pesquisar(
 			@RequestParam(value = "ano", required = false) String ano,

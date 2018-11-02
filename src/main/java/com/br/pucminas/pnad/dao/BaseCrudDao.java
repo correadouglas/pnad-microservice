@@ -12,10 +12,8 @@ public abstract class BaseCrudDao<T> {
 
 	@SuppressWarnings("unchecked")
 	public T save(T entity) {
-		
 		Objects.requireNonNull(entity);
 		return (T) getRepository().save(entity);
-		
 	}
 
 	@SuppressWarnings("unchecked")
