@@ -20,6 +20,7 @@ public class PnadController {
 	
 	@GetMapping
 	public List<Pnad> pesquisar(
+			@RequestParam(value = "limiteRegistros", required = false) Integer limiteRegistros,
 			@RequestParam(value = "ano", required = false) String ano,
 			@RequestParam(value = "trimestre", required = false) String trimestre,
 			@RequestParam(value = "uf", required = false) String uf,
@@ -435,7 +436,7 @@ public class PnadController {
 		pnad.setVd4036(vd4036);
 		pnad.setVd4037(vd4037);
 		
-		return pnadDao.pesquisar(pnad);
+		return pnadDao.pesquisar(limiteRegistros, pnad);
 		
 	}
 	

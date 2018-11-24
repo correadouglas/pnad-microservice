@@ -25,7 +25,7 @@ public class PnadDao extends BaseCrudDao<Pnad> {
 		return this.repository;
 	}
 
-	public List<Pnad> pesquisar(Pnad pnad) {
+	public List<Pnad> pesquisar(Integer limiteRegistros, Pnad pnad) {
 
 		StringBuilder sql = new StringBuilder()
 				.append(" select * from pnad.microdados p ")
@@ -1063,6 +1063,10 @@ public class PnadDao extends BaseCrudDao<Pnad> {
 			sql.append(" and p.vd4037 = ? ");
 		}
 
+		if (limiteRegistros != null) {
+			sql.append(" limit ").append(limiteRegistros);			
+		}
+		
 		return this.jdbcTemplate.query(sql.toString(), params.toArray(), new PnadRowMapper());
 
 	}
