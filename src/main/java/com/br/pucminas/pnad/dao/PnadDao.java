@@ -32,7 +32,15 @@ public class PnadDao extends BaseCrudDao<Pnad> {
 				.append(" where 1 = 1 ");
 
 		List<Object> params = new ArrayList<>();
+		
+		adicionarFiltros(sql, params, limiteRegistros, pnad);
+		
+		return this.jdbcTemplate.query(sql.toString(), params.toArray(), new PnadRowMapper());
 
+	}
+	
+	private void adicionarFiltros(StringBuilder sql, List<Object> params, Integer limiteRegistros, Pnad pnad) {
+		
 		if (pnad.getAno() != null) {
 			params.add(pnad.getAno());
 			sql.append(" and p.ano = ? ");
@@ -1065,10 +1073,8 @@ public class PnadDao extends BaseCrudDao<Pnad> {
 
 		if (limiteRegistros != null) {
 			sql.append(" limit ").append(limiteRegistros);			
-		}
+		}		
 		
-		return this.jdbcTemplate.query(sql.toString(), params.toArray(), new PnadRowMapper());
-
 	}
-
+	
 }

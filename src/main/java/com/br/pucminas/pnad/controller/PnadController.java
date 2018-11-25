@@ -1,7 +1,5 @@
 package com.br.pucminas.pnad.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.br.pucminas.pnad.dao.PnadDao;
 import com.br.pucminas.pnad.model.Pnad;
+import com.br.pucminas.pnad.response.PnadResponse;
 
 @RestController
 @RequestMapping("/pnad")
@@ -19,7 +18,7 @@ public class PnadController {
 	private PnadDao pnadDao;
 	
 	@GetMapping
-	public List<Pnad> pesquisar(
+	public PnadResponse pesquisar(
 			@RequestParam(value = "limiteRegistros", required = false) Integer limiteRegistros,
 			@RequestParam(value = "ano", required = false) String ano,
 			@RequestParam(value = "trimestre", required = false) String trimestre,
@@ -436,7 +435,11 @@ public class PnadController {
 		pnad.setVd4036(vd4036);
 		pnad.setVd4037(vd4037);
 		
-		return pnadDao.pesquisar(limiteRegistros, pnad);
+		PnadResponse response = new PnadResponse();
+		response.setMicrodados(pnadDao.pesquisar(limiteRegistros, pnad));
+		response.setQuantidade(response.getMicrodados() != null ? response.getMicrodados().size() : 0);
+		
+		return response;
 		
 	}
 	
